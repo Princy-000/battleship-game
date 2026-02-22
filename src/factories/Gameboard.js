@@ -73,6 +73,7 @@ function Gameboard() {
     board,
     ships,
     missedAttacks,
+    attackedCoordinates, // Make this accessible for DOM rendering
     placeShip,
     receiveAttack,
     allShipsSunk

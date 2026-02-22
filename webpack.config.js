@@ -1,19 +1,31 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   mode: 'development',
   entry: './src/index.js',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true, // Clean the dist folder before each build
+    clean: true,
   },
-  devtool: 'inline-source-map', // For easier debugging
+  devtool: 'inline-source-map',
   devServer: {
     static: './dist',
-    hot: true, // Enable hot module replacement
-    open: true, // Auto-open browser
+    hot: true,
+    open: true,
+    port: 8080,
+    host: 'localhost',
+    client: {
+      overlay: true,
+      progress: true,
+      reconnect: true,
+    },
+    watchFiles: ['src/**/*', 'public/**/*'],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -25,11 +37,11 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'], // Processes CSS files
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|wav|mp3)$/i,
-        type: 'asset/resource', // Handles images and sounds
+        type: 'asset/resource',
       },
       {
         test: /\.m?js$/,
@@ -37,7 +49,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'], // Transpiles modern JS
+            presets: ['@babel/preset-env'],
           },
         },
       },
